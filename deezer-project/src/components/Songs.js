@@ -7,8 +7,31 @@ const SongsContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    padding: 20px;
+    background-color: grey;
 `
 
+const FormContainer = styled.div`
+    width: 100%;
+    padding: 50px;
+    background-color: grey;
+    border: solid 1px black;
+`
+
+const Form = styled.form`
+    width: 250px;
+    font-size: 25px;
+    `
+
+const Option = styled.option`
+    font-size: 25px;
+    font-weight: bold;
+`
+
+const Select = styled.select`
+    width: 250px;
+    font-size: 25px;
+`
 
 
 function Songs(props) {
@@ -20,30 +43,11 @@ function Songs(props) {
     const [songsArray, setSongsArray] = useState(songsList.tracks.data);
     const [reversed, setReversed] = useState(0);
 
-    function logSongsInfo() {
-        let tempArr = songsArray;
-      
-        
-        for(let i = 0;i<tempArr.length;i++){
-            for(let j = 0;j<(tempArr.length - i - 1 );j++){
-                if(tempArr[j].duration > tempArr[j+1].duration){
-                    let temp = tempArr[j]
-                    tempArr[j] = tempArr[j + 1]
-                    tempArr[j + 1] = temp
-                }
-            }
-        }
-        console.log("sorted");
-        console.log(tempArr);
-        console.log("unsorted")
-        console.log(songsArray);
-        setSongsArray(tempArr);
-        
-    }
+    
 
     const sortByShortestSong = () => {
         let tempArr = songsArray;
-      
+        
         
         for(let i = 0;i<tempArr.length;i++){
             for(let j = 0;j<(tempArr.length - i - 1 );j++){
@@ -54,10 +58,7 @@ function Songs(props) {
                 }
             }
         }
-        console.log("sorted");
-        console.log(tempArr);
-        console.log("unsorted")
-        console.log(songsArray);
+        
         setSongsArray(tempArr);
         setReversed(0);
     }
@@ -69,11 +70,7 @@ function Songs(props) {
       ))
 
 
-    const song = songsList.tracks.data.map(songInfo => (
-        <div key={songInfo.id}>
-            <Song song={songInfo}/>
-        </div>
-      ))
+    
 
       const reverseSort = () => {
           let tempArr = songsArray.reverse();
@@ -83,14 +80,14 @@ function Songs(props) {
 
     return(
         <div>
-
-            <form>
-                <select>
-                    <option onClick={reverseSort}>Ascending</option>
-                    <option onClick={sortByShortestSong}>Descending</option>
-                </select>
-            </form>
-            
+            <FormContainer>
+            <Form className="sorting-form">
+                <Select>
+                    <Option onClick={reverseSort}>Ascending</Option>
+                    <Option onClick={sortByShortestSong}>Descending</Option>
+                </Select>
+            </Form>
+            </FormContainer>
             
             <SongsContainer>
                 {songSorted}

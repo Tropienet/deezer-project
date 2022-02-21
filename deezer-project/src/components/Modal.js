@@ -1,5 +1,12 @@
 import React from 'react'
 import ReactDom from 'react-dom';
+import styled from 'styled-components';
+
+const CloseButton = styled.button`
+    width: 100px;
+    height: 100px;
+    font-size: 25px;
+`
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -29,7 +36,7 @@ export default function Modal({ open,children, onClose}) {
         <div style={OVERLAY_STYLES}/>
         <div style={MODAL_STYLES}>
             {children}
-            <button onClick={onClose}>Close</button>
+            <CloseButton onClick={onClose}>Close</CloseButton>
         </div>
         </>,
         document.getElementById('portal')
