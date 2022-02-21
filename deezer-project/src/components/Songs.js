@@ -13,13 +13,43 @@ const SongsContainer = styled.div`
 
 function Songs(props) {
     
-    const [durationType, setDurationType] = useState({value: "longest"});
+    
 
     const {songsList} = props;
 
-    function handleChange(e) {
-        setDurationType({value: e.target.value});
+    const [songsArray, setSongsArray] = useState(songsList.tracks.data);
+
+    function logSongsInfo() {
+        let tempArr = [];
+        console.log(songsArray.length);
+        for(let i = 0;i<songsArray.length;i++){
+            
+            tempArr.push(songsArray[i].duration);
+            console.log(songsArray[i].duration);
+        }
+        
+
+        let lowestToHighest = tempArr.sort((a,b) => a-b);
+        
+        for(let i = 0; i<lowestToHighest.length;i++){
+            for(let j = 0; j<lowestToHighest.length; j++){
+                if(lowestToHighest[i]===songsArray[j].duration){
+                    lowestToHighest[i]=songsArray[j];
+                }
+            }
+        }
+        console.log(lowestToHighest);
+        let highestToLowest = tempArr.sort((a,b) => b-a);
+        for(let i = 0; i<highestToLowest.length;i++){
+            for(let j = 0;j<highestToLowest.length;j++){
+                if(highestToLowest[i]===songsArray[j].duration){
+                    highestToLowest[i]=songsArray[j];
+                }
+            }
+        }
+        console.log(highestToLowest);
     }
+   
 
     const song = songsList.tracks.data.map(songInfo => (
         <div key={songInfo.id}>
@@ -29,12 +59,7 @@ function Songs(props) {
 
     return(
         <div>
-            <form>
-                <select value={durationType} onChange={handleChange}>
-                    <option value="longest">Longest</option>
-                    <option value="shortest">Shortest</option>
-                </select>
-            </form>
+            <button onClick={logSongsInfo}>Log</button>
             <SongsContainer>
                 {song}
             </SongsContainer>
