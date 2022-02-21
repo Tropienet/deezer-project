@@ -30,15 +30,11 @@ function App() {
       
       <div>
         
-        <h1>Hello world</h1>
         
-        <div>
-          
-        </div>
         <div>
           <Songs songsList={songsList}/>
         </div>
-        <h2>{songsList.albums.data[0].title}</h2>
+        
       </div>
     )
   }

@@ -18,38 +18,56 @@ function Songs(props) {
     const {songsList} = props;
 
     const [songsArray, setSongsArray] = useState(songsList.tracks.data);
+    const [reversed, setReversed] = useState(0);
 
     function logSongsInfo() {
-        let tempArr = [];
-        console.log(songsArray.length);
-        for(let i = 0;i<songsArray.length;i++){
-            
-            tempArr.push(songsArray[i].duration);
-            console.log(songsArray[i].duration);
-        }
+        let tempArr = songsArray;
+      
         
+        for(let i = 0;i<tempArr.length;i++){
+            for(let j = 0;j<(tempArr.length - i - 1 );j++){
+                if(tempArr[j].duration > tempArr[j+1].duration){
+                    let temp = tempArr[j]
+                    tempArr[j] = tempArr[j + 1]
+                    tempArr[j + 1] = temp
+                }
+            }
+        }
+        console.log("sorted");
+        console.log(tempArr);
+        console.log("unsorted")
+        console.log(songsArray);
+        setSongsArray(tempArr);
+        
+    }
 
-        let lowestToHighest = tempArr.sort((a,b) => a-b);
+    const sortByShortestSong = () => {
+        let tempArr = songsArray;
+      
         
-        for(let i = 0; i<lowestToHighest.length;i++){
-            for(let j = 0; j<lowestToHighest.length; j++){
-                if(lowestToHighest[i]===songsArray[j].duration){
-                    lowestToHighest[i]=songsArray[j];
+        for(let i = 0;i<tempArr.length;i++){
+            for(let j = 0;j<(tempArr.length - i - 1 );j++){
+                if(tempArr[j].duration > tempArr[j+1].duration){
+                    let temp = tempArr[j]
+                    tempArr[j] = tempArr[j + 1]
+                    tempArr[j + 1] = temp
                 }
             }
         }
-        console.log(lowestToHighest);
-        let highestToLowest = tempArr.sort((a,b) => b-a);
-        for(let i = 0; i<highestToLowest.length;i++){
-            for(let j = 0;j<highestToLowest.length;j++){
-                if(highestToLowest[i]===songsArray[j].duration){
-                    highestToLowest[i]=songsArray[j];
-                }
-            }
-        }
-        console.log(highestToLowest);
+        console.log("sorted");
+        console.log(tempArr);
+        console.log("unsorted")
+        console.log(songsArray);
+        setSongsArray(tempArr);
+        setReversed(0);
     }
    
+    const songSorted = songsArray.map(songInfo => (
+        <div key={songInfo.id}>
+            <Song song={songInfo}/>
+        </div>
+      ))
+
 
     const song = songsList.tracks.data.map(songInfo => (
         <div key={songInfo.id}>
@@ -57,11 +75,25 @@ function Songs(props) {
         </div>
       ))
 
+      const reverseSort = () => {
+          let tempArr = songsArray.reverse();
+          setSongsArray(tempArr);
+          setReversed(1);
+      }
+
     return(
         <div>
-            <button onClick={logSongsInfo}>Log</button>
+
+            <form>
+                <select>
+                    <option onClick={reverseSort}>Ascending</option>
+                    <option onClick={sortByShortestSong}>Descending</option>
+                </select>
+            </form>
+            
+            
             <SongsContainer>
-                {song}
+                {songSorted}
             </SongsContainer>
         </div>
     )
