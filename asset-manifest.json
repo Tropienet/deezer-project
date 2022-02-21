@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/deezer-project/static/css/main.db78d8a7.css",
+    "main.js": "/deezer-project/static/js/main.fe0ad3a4.js",
+    "index.html": "/deezer-project/index.html",
+    "main.db78d8a7.css.map": "/deezer-project/static/css/main.db78d8a7.css.map",
+    "main.fe0ad3a4.js.map": "/deezer-project/static/js/main.fe0ad3a4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db78d8a7.css",
+    "static/js/main.fe0ad3a4.js"
+  ]
+}
