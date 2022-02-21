@@ -1,26 +1,44 @@
 import styled from "styled-components";
 
+import React, { useState } from "react";
+import Song from "./Song";
+
 const SongsContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
 `
 
+
+
 function Songs(props) {
+    
+    const [durationType, setDurationType] = useState({value: "longest"});
+
     const {songsList} = props;
 
-    const song = songsList.tracks.data.map(songss => (
-        <div key={songss.id}>
-            <p>This is from the songs components</p>
-            <p>Naziv pjesme: {songss.title}</p>
-            <img src={songss.album.cover} alt={songss.album.cover}></img>
-            <p>Ime glazbenika: {songss.artist.name}</p>
+    function handleChange(e) {
+        setDurationType({value: e.target.value});
+    }
+
+    const song = songsList.tracks.data.map(songInfo => (
+        <div key={songInfo.id}>
+            <Song song={songInfo}/>
         </div>
       ))
 
     return(
-        <SongsContainer>
-            {song}
-        </SongsContainer>
+        <div>
+            <form>
+                <select value={durationType} onChange={handleChange}>
+                    <option value="longest">Longest</option>
+                    <option value="shortest">Shortest</option>
+                </select>
+            </form>
+            <SongsContainer>
+                {song}
+            </SongsContainer>
+        </div>
     )
 }
 
